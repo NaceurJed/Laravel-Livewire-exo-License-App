@@ -1,0 +1,29 @@
+****** Autre façon de faire ******
+- on enléve les fonctions mount() et updateTeamSize() et l'attribut $amount
+- Au niveau de render() on peut passer des variables lorsqu'on retourne notre vue: donc amount sera passer par là:
+	public function render()
+    	{
+      	  return view('livewire.license', [
+           	 'amount' => 50
+        	]);
+    	}
+- La valeur de amount sera calculée grace à la méthode calculateAmount
+- On va déplacer la méthode calculateAmount dans une autre classe dédiée 
+	- on va créer un dossier Service dans App, dans lequel on créer un fichier LicensePriceCaculator
+	- Puis on colle notre méthode dans ce fichier
+	- dans le fichier License.php: La valeur de amount sera calculé grace à la méthode calculatePrice de la classe LicensePriceCalculator
+	( ne pas oublier d'importer la classe LicensePriceCalculator dasn el fichier License.php)
+
+***** Pour le singulier et plusriel *****
+- On va créer un fichier helpers.php directement dans App
+- On va définir 2 fonctions: pluralize et money
+- puis dans la vue license.blade.php on va utiliser nos méthode pluralize et money
+- Ne pas oublier de autoloader le fichier helpers.php: 
+	- aller dans le fichier composer.jason, et au niveau de "autoload" rajouter: "files": ["app/herlpers.php"],
+
+	"autoload-dev": {
+        	"files": ["app/herlpers.php"],
+        	"psr-4": {
+            	"Tests\\": "tests/"
+       	 }
+	- puis aller à la ligne de commande et taper: "composer dump-autoload -o"
